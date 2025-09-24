@@ -31,12 +31,11 @@ def main():
         exit(1)
 
     df = pd.read_excel(file)
+    name = os.path.basename(file)
+    rows = df.shape[0]
+    cols = df.shape[1]
 
-    print(
-        f"\nLoaded {os.path.basename(file)} with {df.shape[0]} rows and {
-            df.shape[1]
-        } columns."
-    )
+    print(f"\nLoaded {name} with {rows} rows and {cols} columns.")
 
     dep_var = questionary.select(
         "Choose dependent variable:", choices=df.columns.tolist()
