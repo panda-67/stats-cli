@@ -1,0 +1,72 @@
+name: Build and Release stats-cli
+
+on:
+  push:
+    tags:
+      - "v*" # e.g. v0.1.0, v1.0.0
+
+jobs:
+  build:
+    name: Build on ${{ matrix.os }}
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        os: [ubuntu-latest, windows-latest, macos-latest]
+
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Install deps
+        run: pip install -r requirements.txt pyinstaller
+
+      - name: Build binary
+        run: pyinstaller --onefile stats_cli.py
+
+      - name: Prepare upload dir
+        run: |
+          mkdir upload
+          if [ "${{ matrix.os }}" = "Windows" ]; then
+            mv dist/stats_cli.exe upload/stats-cli-windows.exe
+          elif [ "${{ matrix.os }}" = "macOS" ]; then
+            mv dist/stats_cli upload/stats-cli-macos
+          else
+            mv dist/stats_cli upload/stats-cli-linux
+          fi
+
+          cat > upload/README.txt <<'EOF'
+            # Stats CLI
+
+            Cross-platform usage instructions:
+
+            ## Windows
+            - Download `stats-cli-windows.exe`
+            - Double-click to open (Command Prompt will appear)
+
+            ## Linux
+            - Download `stats-cli-linux`
+            - Open terminal and run:
+              chmod +x stats-cli-linux
+              ./stats-cli-linux
+
+            ## macOS
+            - Download `stats-cli-macos`
+            - Open Terminal and run:
+              chmod +x stats-cli-macos
+              ./stats-cli-macos
+
+            ⚠️ Note:
+            - On Linux/macOS, **double-clicking will not show output**. Always run from a terminal.
+          EOF
+
+      - name: Upload binaries to Release
+        uses: softprops/action-gh-release@v2
+        with:
+          files: upload/*
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
