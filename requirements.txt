@@ -1,3 +1,4 @@
+altgraph==0.17.4
 asttokens==3.0.0
 decorator==5.2.1
 et_xmlfile==2.0.0
@@ -9,6 +10,7 @@ jedi==0.19.2
 matplotlib-inline==0.1.7
 numpy==2.3.3
 openpyxl==3.1.5
+packaging==25.0
 pandas==2.3.2
 parso==0.8.5
 pexpect==4.9.0
@@ -17,10 +19,13 @@ prompt_toolkit==3.0.52
 ptyprocess==0.7.0
 pure_eval==0.2.3
 Pygments==2.19.2
+pyinstaller==6.16.0
+pyinstaller-hooks-contrib==2025.9
 python-dateutil==2.9.0.post0
 pytz==2025.2
 questionary==2.1.1
 scipy==1.16.2
+setuptools==80.9.0
 six==1.17.0
 stack-data==0.6.3
 traitlets==5.14.3
