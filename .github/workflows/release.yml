@@ -77,19 +77,41 @@ jobs:
 
             Run basic stats (t-test, ANOVA) from Excel right in your terminal.
 
+            ---
+
             ### ⬇️ Download for your OS
-            - [Windows](https://github.com/${{ github.repository }}/releases/download/${{ github.ref_name }}/stats-cli-windows.exe)
-            - [Linux](https://github.com/${{ github.repository }}/releases/download/${{ github.ref_name }}/stats-cli-linux)
-            - [macOS](https://github.com/${{ github.repository }}/releases/download/${{ github.ref_name }}/stats-cli-macos)
+            👉 Grab the ready-to-use binary for your platform:
+
+            - 🪟 [Windows](https://github.com/${{ github.repository }}/releases/download/${{ github.ref_name }}/stats-cli-windows.exe)
+            - 🐧 [Linux](https://github.com/${{ github.repository }}/releases/download/${{ github.ref_name }}/stats-cli-linux)
+            - 🍏 [macOS](https://github.com/${{ github.repository }}/releases/download/${{ github.ref_name }}/stats-cli-macos)
+
+            ---
 
             ### 📝 Usage
-            1. Download the binary for your OS.
-            2. Open a terminal (or cmd on Windows).
-            3. Run:
-              ```bash
-              ./stats-cli-linux   # Linux
-              ./stats-cli-macos   # macOS
-              stats-cli-windows.exe   # Windows
+
+            #### 🪟 Windows
+            1. Download **`stats-cli-windows.exe`**
+            2. Double-click to open (Command Prompt will appear)
+
+            #### 🐧 Linux
+            1. Download **`stats-cli-linux`**
+            2. Run in terminal:
+              ```sh
+              chmod +x stats-cli-linux
+              ./stats-cli-linux
               ```
+
+            #### 🍏 macOS
+            1. Download **`stats-cli-macos`**
+            2. Run in terminal:
+              ```sh
+              chmod +x stats-cli-macos
+              ./stats-cli-macos
+              ```
+
+            ---
+
+            ⚠️ *Note: GitHub auto-adds "Source code" downloads below. Use the binaries above unless you want to build from source.*
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
