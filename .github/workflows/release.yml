@@ -35,14 +35,13 @@ jobs:
         shell: bash
         run: |
           mkdir upload
-          if [ "${{ matrix.os }}" = "Windows" ]; then
-            mv dist/stats_cli.exe upload/stats-cli-windows.exe
-          elif [ "${{ matrix.os }}" = "macOS" ]; then
-            mv dist/stats_cli upload/stats-cli-macos
+           if [[ "${{ matrix.os }}" == "windows-latest" ]]; then
+            mv dist/stats-cli.exe upload/stats-cli-windows.exe
+          elif [[ "${{ matrix.os }}" == "macos-latest" ]]; then
+            mv dist/stats-cli upload/stats-cli-macos
           else
-            mv dist/stats_cli upload/stats-cli-linux
+            mv dist/stats-cli upload/stats-cli-linux
           fi
-
           cat > upload/README.txt <<'EOF'
             # Stats CLI
 
@@ -72,5 +71,25 @@ jobs:
         uses: softprops/action-gh-release@v2
         with:
           files: upload/*
+          overwrite: true
+          body: |
+            ## 📦 Stats CLI ${{ github.ref_name }}
+
+            Run basic stats (t-test, ANOVA) from Excel right in your terminal.
+
+            ### ⬇️ Download for your OS
+            - [Windows](https://github.com/${{ github.repository }}/releases/download/${{ github.ref_name }}/stats-cli-windows.exe)
+            - [Linux](https://github.com/${{ github.repository }}/releases/download/${{ github.ref_name }}/stats-cli-linux)
+            - [macOS](https://github.com/${{ github.repository }}/releases/download/${{ github.ref_name }}/stats-cli-macos)
+
+            ### 📝 Usage
+            1. Download the binary for your OS.
+            2. Open a terminal (or cmd on Windows).
+            3. Run:
+              ```bash
+              ./stats-cli-linux   # Linux
+              ./stats-cli-macos   # macOS
+              stats-cli-windows.exe   # Windows
+              ```
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
