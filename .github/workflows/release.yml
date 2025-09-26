@@ -36,11 +36,11 @@ jobs:
         run: |
           mkdir upload
            if [[ "${{ matrix.os }}" == "windows-latest" ]]; then
-            mv dist/stats-cli.exe upload/stats-cli-windows.exe
+            mv dist/stats_cli.exe upload/stats-cli-windows.exe
           elif [[ "${{ matrix.os }}" == "macos-latest" ]]; then
-            mv dist/stats-cli upload/stats-cli-macos
+            mv dist/stats_cli upload/stats-cli-macos
           else
-            mv dist/stats-cli upload/stats-cli-linux
+            mv dist/stats_cli upload/stats-cli-linux
           fi
           cat > upload/README.txt <<'EOF'
             # Stats CLI
