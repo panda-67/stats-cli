@@ -13,6 +13,7 @@ openpyxl==3.1.5
 packaging==25.0
 pandas==2.3.2
 parso==0.8.5
+patsy==1.0.1
 pexpect==4.9.0
 pfzy==0.3.4
 prompt_toolkit==3.0.52
@@ -28,6 +29,7 @@ scipy==1.16.2
 setuptools==80.9.0
 six==1.17.0
 stack-data==0.6.3
+statsmodels==0.14.5
 traitlets==5.14.3
 tzdata==2025.2
 wcwidth==0.2.14
