@@ -1,11 +1,12 @@
 import os
 import sys
 import itertools
+import numpy as np
 import pandas as pd
 import tkinter as tk
 from scipy import stats
-from tkinter import filedialog
 from InquirerPy import inquirer
+from tkinter import filedialog
 from statsmodels.stats.multitest import multipletests
 from statsmodels.stats.multicomp import pairwise_tukeyhsd
 
@@ -137,8 +138,34 @@ def bonferroni_posthoc(df, dep_var, group_var):
 
 def run_anova(df, dep_var, group_var):
     groups = [g[dep_var].dropna().to_numpy() for _, g in df.groupby(group_var)]
+    labels = [name for name, _ in df.groupby(group_var)]
     stat, p = stats.f_oneway(*groups)
-    print(f"\nANOVA: F={stat:.4f}, p={p:.4f}")
+
+    # Degrees of freedom
+    k = len(groups)  # number of groups
+    n = sum(len(g) for g in groups)
+    df_between = k - 1
+    df_within = n - k
+
+    print("\nANOVA Results")
+    print("=" * 40)
+
+    # Print group summaries
+    for label, g in zip(labels, groups):
+        print(
+            f"{label} (n={len(g)}): mean={np.mean(g):.2f}, std={np.std(g, ddof=1):.2f}"
+        )
+
+    print(f"\nF({df_between}, {df_within}) = {stat:.4f}, p = {p:.4g}")
+
+    if p < 0.001:
+        sig = "highly significant (p < 0.001)"
+    elif p < 0.05:
+        sig = "significant (p < 0.05)"
+    else:
+        sig = "not significant (p ≥ 0.05)"
+
+    print(f"Result: {sig}.")
 
     if p < 0.05:
         posthoc_choice = inquirer.select(
